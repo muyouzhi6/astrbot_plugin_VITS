@@ -56,8 +56,6 @@ class VITSPlugin(Star):
             # 如果组件是Plain类型，则将其文本内容添加到plain_text中
             if isinstance(comp, Plain):
                 plain_text += comp.text
-            else:
-                non_plain_components.append(comp)
 
         # 初始化输出音频路径
         output_audio_path = "data/plugins/astrbot_plugin_VITS/miao.wav"
@@ -75,5 +73,5 @@ class VITSPlugin(Star):
                 response_format="mp3"  # 支持 mp3, wav, pcm, opus 格式
         ) as response:
             response.stream_to_file(output_audio_path)
-            result.chain = [Record(file=output_audio_path)] + non_plain_components
+            result.chain = [Record(file=output_audio_path)]
 

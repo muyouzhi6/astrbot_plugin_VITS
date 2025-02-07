@@ -1,5 +1,7 @@
 # **Astrbot_Plugin_VITS**
 
+## 切记不要开原来的TTS
+![img.png](img.png)
 ## 调用硅基流动API实现文本转语音插件。
 
 ## 需要在插件面板中配置以下内容：
@@ -7,7 +9,7 @@
 - **API Key**
 - **模型名字**
 - **音色**
-
+![img_1.png](img_1.png)
 ## 音色前需要加上模型名字
 
 如 ：使用alex音色，
@@ -34,6 +36,8 @@ FunAudioLLM/CosyVoice2-0.5B模型，
 - **激情女声**: bella
 - **温柔女声**: claire
 - **欢快女声**: diana
+
+# /vits 启用或者禁用插件（插件默认禁用）
 
 
 # 未来可能支持本地GPT sovits
