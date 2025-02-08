@@ -1,7 +1,11 @@
 # **Astrbot_Plugin_VITS**
 
+# Docker部署没法用
+
 ## 切记不要开原来的TTS
 ![img.png](img.png)
+## @和回复会吞语音，需要关闭
+![img_2.png](img_2.png)
 ## 调用硅基流动API实现文本转语音插件。
 
 ## 需要在插件面板中配置以下内容：
@@ -10,15 +14,18 @@
 - **模型名字**
 - **音色**
 ![img_1.png](img_1.png)
-## 音色前需要加上模型名字
+## URL 末尾要加/v1
+**`https://api.siliconflow.cn/v1`**
+
+## 音色前需要加上模型名字，用英文冒号隔开
 
 如 ：使用alex音色，
 
 FunAudioLLM/CosyVoice2-0.5B模型，
 
-则name配置为：FunAudioLLM/CosyVoice2-0.5B
+则name配置为：`FunAudioLLM/CosyVoice2-0.5B`
 
-则voice配置为：FunAudioLLM/CosyVoice2-0.5B:alex
+则voice配置为：`FunAudioLLM/CosyVoice2-0.5B:alex`
 
 
 ## 目前仅支持官方预置音色
