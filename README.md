@@ -1,7 +1,5 @@
 # **Astrbot_Plugin_VITS**
 
-# Docker部署没法用
-
 ## 切记不要开原来的TTS
 ![img.png](img.png)
 ## @和回复会吞语音，需要关闭
@@ -55,3 +53,6 @@ FunAudioLLM/CosyVoice2-0.5B模型，
 
 
 **（作者是初学者，欢迎大家提意见，反馈bug。）**
+
+# 更新
+- 2024.2.9  ——  解决了图片发送的冲突，修复了路径出错的bug

@@ -7,7 +7,7 @@ import logging
 import re
 
 # 注册插件的装饰器
-@register("VITSPlugin", "第九位魔神", "语音合成插件", "1.1.0")
+@register("VITSPlugin", "第九位魔神", "语音合成插件", "1.2.0")
 class VITSPlugin(Star):
     def __init__(self, context: Context, config: dict):
         super().__init__(context)
