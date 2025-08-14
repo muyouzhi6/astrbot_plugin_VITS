@@ -1,22 +1,37 @@
 {
     "url": {
-        "description": "API URL",
+        "description": "API 地址",
         "type": "string",
-        "hint": "请输入API的URL地址"
+        "hint": "如 https://api.siliconflow.cn/v1"
     },
     "apikey": {
-        "description": "API Key",
+        "description": "API 密钥",
         "type": "string",
-        "hint": "请输入API的密钥"
+        "hint": "如 sk-xxx"
     },
     "name": {
         "description": "模型名称",
         "type": "string",
-        "hint": "请输入模型的名称"
+        "hint": "如 siliconflow-vits-v1"
     },
     "voice": {
-        "description": "音色名称",
+        "description": "音色名称/uri",
         "type": "string",
-        "hint": "请输入音色的名称"
+        "hint": "如 zhizhi-xxx"
+    },
+    "enabled_sessions": {
+        "description": "自动TTS的会话（user_用户ID,group_群号，逗号分隔）",
+        "type": "string",
+        "hint": "如 user_123,group_456"
+    },
+    "text_limit": {
+        "description": "最大字数（已固定：汉字≤80，英文≤200）",
+        "type": "int",
+        "hint": "无需修改，插件已自动按汉字≤80、英文≤200限制"
+    },
+    "speed": {
+        "description": "语速（1正常，0.8慢，1.2快）",
+        "type": "float",
+        "hint": "如 1.1"
     }
 }
