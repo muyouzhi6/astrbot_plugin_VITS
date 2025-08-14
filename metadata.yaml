@@ -1,6 +1,10 @@
 name: astrbot_plugin_VITS # 这是你的插件的唯一识别名。
 desc: 硅基流动api语音合成。 # 插件简短描述
-help: 输入/vits启用和关闭插件 。 # 插件的帮助信息
-version: v1.2.0 # 插件版本号。格式：v1.1.1 或者 v1.1
+help: |
+		输入/vits_say 进行文本转语音。
+		支持全局TTS开关 global_enable（默认关闭），仅在 global_enable=true 时 enabled_sessions 配置的会话才会自动TTS。
+		默认全局关闭，需手动配置需要自动TTS的会话。
+		支持/vits_enable 和 /vits_disable 指令，随时在对话内动态开启/关闭本会话TTS（仅在 global_enable=false 时生效）。
+version: v2.0.0 # 插件版本号。格式：v1.1.1 或者 v1.1
 author: 第九位魔神 # 作者
 repo: https://github.com/cyber-moshen/astrbot_plugin_VITS # 插件的仓库地址
