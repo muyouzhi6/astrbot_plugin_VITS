@@ -106,7 +106,7 @@ class VITSPlugin(Star):
         self.api_name = config.get('name', '')  # 提取 模型 名称
         self.api_voice = config.get('voice', '')  # 提取角色名称
         # 新增：全局TTS开关，优先级最高
-    self.global_enable = config.get('global_enable', False)
+        self.global_enable = config.get('global_enable', False)
         # 新增：配置默认开启的会话列表，支持字符串或列表
         enabled_sessions = config.get('enabled_sessions', [])
         if isinstance(enabled_sessions, str):
