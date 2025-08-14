@@ -12,6 +12,44 @@ import re
 @register("VITSPlugin", "第九位魔神", "语音合成插件", "1.2.0")
 
 class VITSPlugin(Star):
+    @filter.command("vits_enable", priority=1)
+    async def vits_enable(self, event: AstrMessageEvent):
+        """开启本会话TTS"""
+        session_id = self._get_session_id(event)
+        # 只在全局开关为false时允许动态开关
+        if not getattr(self, 'global_enable', False):
+            # 动态修改 enabled_sessions
+            enabled_sessions = self.config.get('enabled_sessions', [])
+            if isinstance(enabled_sessions, str):
+                enabled_sessions = [s.strip() for s in enabled_sessions.split(',') if s.strip()]
+            if session_id not in enabled_sessions:
+                enabled_sessions.append(session_id)
+                self.default_enabled_sessions = enabled_sessions
+                # 同步回 config
+                self.config['enabled_sessions'] = ','.join(enabled_sessions)
+                yield event.plain_result("本会话TTS已开启")
+            else:
+                yield event.plain_result("本会话TTS本就已开启")
+        else:
+            yield event.plain_result("请先关闭全局TTS开关（global_enable=false）后再单独控制会话")
+
+    @filter.command("vits_disable", priority=1)
+    async def vits_disable(self, event: AstrMessageEvent):
+        """关闭本会话TTS"""
+        session_id = self._get_session_id(event)
+        if not getattr(self, 'global_enable', False):
+            enabled_sessions = self.config.get('enabled_sessions', [])
+            if isinstance(enabled_sessions, str):
+                enabled_sessions = [s.strip() for s in enabled_sessions.split(',') if s.strip()]
+            if session_id in enabled_sessions:
+                enabled_sessions.remove(session_id)
+                self.default_enabled_sessions = enabled_sessions
+                self.config['enabled_sessions'] = ','.join(enabled_sessions)
+                yield event.plain_result("本会话TTS已关闭")
+            else:
+                yield event.plain_result("本会话TTS本就已关闭")
+        else:
+            yield event.plain_result("请先关闭全局TTS开关（global_enable=false）后再单独控制会话")
 
     @filter.command("vits_say", priority=1)
     async def vits_say(self, event: AstrMessageEvent, *, text: str = None):
@@ -67,6 +105,8 @@ class VITSPlugin(Star):
         self.api_key = config.get('apikey', '')  # 提取 API Key
         self.api_name = config.get('name', '')  # 提取 模型 名称
         self.api_voice = config.get('voice', '')  # 提取角色名称
+        # 新增：全局TTS开关，优先级最高
+    self.global_enable = config.get('global_enable', False)
         # 新增：配置默认开启的会话列表，支持字符串或列表
         enabled_sessions = config.get('enabled_sessions', [])
         if isinstance(enabled_sessions, str):
@@ -93,6 +133,9 @@ class VITSPlugin(Star):
     async def on_decorating_result(self, event: AstrMessageEvent):
 
 
+        # 优先判断全局TTS开关
+        if not getattr(self, 'global_enable', True):
+            return
         # 只在配置中指定的会话开启TTS
         session_id = self._get_session_id(event)
         if session_id not in self.default_enabled_sessions:
