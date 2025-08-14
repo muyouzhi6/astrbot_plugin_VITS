@@ -1,58 +1,86 @@
-# **Astrbot_Plugin_VITS**
 
-## 切记不要开原来的TTS
-![img.png](img.png)
-## @和回复会吞语音，需要关闭
-![img_2.png](img_2.png)
-## 调用硅基流动API实现文本转语音插件。
+# AstrBot VITS 语音合成插件（木有知改进版）
 
-## 需要在插件面板中配置以下内容：
-- **URL**
-- **API Key**
-- **模型名字**
-- **音色**
-![img_1.png](img_1.png)
-## URL 末尾要加/v1
-**`https://api.siliconflow.cn/v1`**
+## 功能简介
+支持将指定文字自动或手动转为语音，支持自定义音色、语速、字数限制、会话控制。
 
-## 音色前需要加上模型名字，用英文冒号隔开
+## 快速用法
+1. 在插件面板填写 API URL、API Key、模型名称、音色名称等参数。
+2. 配置 enabled_sessions（如 user_123456,group_654321）决定哪些会话自动转语音。
+3. 发送指令：
+	- `vits_say 你要说的话`  → 机器人直接回复语音。
+	- `vits_status`  → 查询本会话 TTS 状态。
 
-如 ：使用alex音色，
+## 参数说明
+| 参数名            | 说明                       | 示例                      |
+|-------------------|----------------------------|---------------------------|
+| url               | API 地址                   | https://api.siliconflow.cn/v1 |
+| apikey            | API 密钥                   | sk-xxx                    |
+| name              | 模型名称                   | siliconflow-vits-v1       |
+| voice             | 音色名称/uri               | zhizhi-xxx                |
+| enabled_sessions  | 自动TTS会话（逗号分隔）    | user_123,group_456        |
+| text_limit        | 最大字数                   | 30                        |
+| speed             | 语速（1正常，0.8慢，1.2快）| 1.1                       |
 
-FunAudioLLM/CosyVoice2-0.5B模型，
+## 常见问题
+- 语音转换失败：请检查 API Key、模型/音色参数、网络，或查看日志详细报错。
+- 如何只在部分群/私聊生效？→ 配置 enabled_sessions。
+- 如何自定义语速？→ 配置 speed 参数。
+- 如何上传自定义音色？→ 见硅基流动 API 文档。
 
-则name配置为：`FunAudioLLM/CosyVoice2-0.5B`
+## 进阶
+- 支持图片检测、异常捕获、详细日志输出。
+- 代码已适配新版/旧版 AstrBot，适合二次开发。
 
-则voice配置为：`FunAudioLLM/CosyVoice2-0.5B:alex`
+---
+如有问题请联系插件原作者或“木有知”，或查阅 API 官方文档。
 
+# Astrbot_Plugin_VITS 使用说明
 
-## 目前仅支持官方预置音色
+## 插件简介
+本插件为 AstrBot 提供文本转语音（TTS）功能，支持硅基流动 API，可自定义音色、模型、API Key。
 
-### 男生音色：
+---
 
-- **沉稳男声**: alex
-- **低沉男声**: benjamin
-- **磁性男声**: charles
-- **欢快男声**: david
+## 快速配置
+1. **插件面板配置**：
+	- URL：`https://api.siliconflow.cn/v1`
+	- API Key：你的硅基流动 API Key
+	- 模型名称（name）：如 `FunAudioLLM/CosyVoice2-0.5B`
+	- 音色（voice）：可填官方音色（如 `FunAudioLLM/CosyVoice2-0.5B:alex`）或自定义音色 uri（如 `speech:myvoice:icwcmuszkb:eachiineltvqdwxhmkft`）
 
-### 女生音色：
+2. **自定义音色上传**：
+	- 用 voice_tools 文件夹下的上传脚本，按说明上传音频，获取 uri。
+	- 将 uri 填入插件 voice 字段即可。
 
-- **沉稳女声**: anna
-- **激情女声**: bella
-- **温柔女声**: claire
-- **欢快女声**: diana
+---
 
-# /vits 启用或者禁用插件（插件默认禁用）
+## 指令说明
+- `vits_enable`：开启本会话 TTS（仅在 global_enable=false 时生效）。
+- `vits_disable`：关闭本会话 TTS（仅在 global_enable=false 时生效）。
+- `vits_status`：查询本会话 TTS 当前状态（开启/关闭）。
 
+| global_enable     | 全局TTS开关（优先级最高，默认关闭，false=全部关闭，true=全部开启） | false |
+| enabled_sessions  | 自动TTS会话（user_用户ID,group_群号，逗号分隔，仅在全局开关为true时生效） | user_123,group_456        |
+---
+2. 配置 global_enable=false（默认），所有会话都不自动TTS。仅当 global_enable=true 时，enabled_sessions 配置的会话才会自动TTS。
 
-# 未来可能支持本地GPT sovits
+ - 如何只在部分群/私聊生效？→ 默认全局关闭（global_enable=false），只需在 enabled_sessions 配置需要自动TTS的会话ID。
+ - 如何全局一键开启/关闭？→ 设置 global_enable=true/false 即可。
+- 插件默认关闭，需用 `vits` 指令开启。
+- 只对当前会话（群聊/私聊）生效，互不影响。
+- 仅当文本内容不超过30字时才会进行语音合成，超出则无语音输出。
+- 检测到图片时不进行语音合成。
 
-## 有什么好玩的想法可以来找我吖
-### 不会用也欢迎找我
+---
 
+## 常见问题
+- **音色无效/报错**：请确认 API Key、模型名、音色 uri 正确。
+- **自定义音色上传失败**：请检查音频格式、参考文本、API Key 权限。
+- **TTS无响应**：请确认本会话已用 `vits` 开启，且文本不超过30字。
 
+---
 
-**（作者是初学者，欢迎大家提意见，反馈bug。）**
-
-# 更新
-- 2024.2.9  ——  解决了图片发送的冲突，修复了路径出错的bug
+## 其它
+- 支持官方和自定义音色。
+- 代码和指令均可扩展，如需更多功能请联系开发者。
