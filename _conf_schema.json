@@ -19,10 +19,15 @@
         "type": "string",
         "hint": "如 zhizhi-xxx"
     },
+    "global_enable": {
+        "description": "全局TTS开关（优先级最高，关闭时所有会话都不自动TTS）",
+        "type": "bool",
+        "hint": "true=全局开启，false=全局关闭（优先级高于会话列表）"
+    },
     "enabled_sessions": {
         "description": "自动TTS的会话（user_用户ID,group_群号，逗号分隔）",
         "type": "string",
-        "hint": "如 user_123,group_456"
+        "hint": "如 user_123,group_456，仅在全局开关为true时生效"
     },
     "text_limit": {
         "description": "最大字数（已固定：汉字≤80，英文≤200）",
