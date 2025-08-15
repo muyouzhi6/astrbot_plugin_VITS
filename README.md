@@ -6,25 +6,27 @@
 
 ## 快速用法
 1. 在插件面板填写 API URL、API Key、模型名称、音色名称等参数。
-2. 配置 enabled_sessions（如 user_123456,group_654321）决定哪些会话自动转语音。
+2. 默认全局关闭（global_enable=false）。配置 enabled_sessions（如 user_123456,group_654321）或在对话里用指令开启，决定哪些会话自动转语音。
 3. 发送指令：
 	- `vits_say 你要说的话`  → 机器人直接回复语音。
 	- `vits_status`  → 查询本会话 TTS 状态。
+	- `vits_enable` / `vits_disable` → 在当前会话内开启/关闭自动TTS（全局关闭时可单独控制）。
 
 ## 参数说明
-| 参数名            | 说明                       | 示例                      |
-|-------------------|----------------------------|---------------------------|
-| url               | API 地址                   | https://api.siliconflow.cn/v1 |
-| apikey            | API 密钥                   | sk-xxx                    |
-| name              | 模型名称                   | siliconflow-vits-v1       |
-| voice             | 音色名称/uri               | zhizhi-xxx                |
-| enabled_sessions  | 自动TTS会话（逗号分隔）    | user_123,group_456        |
-| text_limit        | 最大字数                   | 30                        |
-| speed             | 语速（1正常，0.8慢，1.2快）| 1.1                       |
+| 参数名            | 说明                                             | 示例                          |
+|-------------------|--------------------------------------------------|-------------------------------|
+| url               | API 地址                                         | https://api.siliconflow.cn/v1 |
+| apikey            | API 密钥                                         | sk-xxx                        |
+| name              | 模型名称                                         | siliconflow-vits-v1           |
+| voice             | 音色名称/uri                                     | zhizhi-xxx                    |
+| global_enable     | 全局TTS开关（默认 false；true=全部会话自动TTS）  | false                         |
+| enabled_sessions  | 自动TTS会话（逗号分隔，user_/group_ 前缀）       | user_123,group_456            |
+| text_limit        | 自动TTS长度限制（汉字≤80，英文≤200；无需修改）  | -                             |
+| speed             | 语速（1正常，0.8慢，1.2快）                      | 1.1                           |
 
 ## 常见问题
 - 语音转换失败：请检查 API Key、模型/音色参数、网络，或查看日志详细报错。
-- 如何只在部分群/私聊生效？→ 配置 enabled_sessions。
+- 如何只在部分群/私聊生效？→ 默认全局关闭，配置 enabled_sessions 或在对话里用 `vits_enable` 开启即可。
 - 如何自定义语速？→ 配置 speed 参数。
 - 如何上传自定义音色？→ 见硅基流动 API 文档。
 
@@ -56,28 +58,23 @@
 ---
 
 ## 指令说明
-- `vits_enable`：开启本会话 TTS（仅在 global_enable=false 时生效）。
-- `vits_disable`：关闭本会话 TTS（仅在 global_enable=false 时生效）。
+- `vits_enable`：开启本会话 TTS（在 global_enable=false 时用于单独控制）。
+- `vits_disable`：关闭本会话 TTS（在 global_enable=false 时用于单独控制）。
 - `vits_status`：查询本会话 TTS 当前状态（开启/关闭）。
 
-| global_enable     | 全局TTS开关（优先级最高，默认关闭，false=全部关闭，true=全部开启） | false |
-| enabled_sessions  | 自动TTS会话（user_用户ID,group_群号，逗号分隔，仅在全局开关为true时生效） | user_123,group_456        |
----
-2. 配置 global_enable=false（默认），所有会话都不自动TTS。仅当 global_enable=true 时，enabled_sessions 配置的会话才会自动TTS。
-
- - 如何只在部分群/私聊生效？→ 默认全局关闭（global_enable=false），只需在 enabled_sessions 配置需要自动TTS的会话ID。
- - 如何全局一键开启/关闭？→ 设置 global_enable=true/false 即可。
-- 插件默认关闭，需用 `vits` 指令开启。
-- 只对当前会话（群聊/私聊）生效，互不影响。
-- 仅当文本内容不超过30字时才会进行语音合成，超出则无语音输出。
-- 检测到图片时不进行语音合成。
+提示：
+- 当 global_enable=true 时，所有会话都会自动TTS；
+- 当 global_enable=false 时，只有 enabled_sessions 列表内或通过指令开启的会话会自动TTS；
+- 自动TTS仅在消息链全部为纯文本（Plain）时触发；
+- 自动TTS长度限制：汉字≤80，英文≤200，超限则发送纯文本；
+- `vits_say` 指令不受长度限制。
 
 ---
 
 ## 常见问题
 - **音色无效/报错**：请确认 API Key、模型名、音色 uri 正确。
 - **自定义音色上传失败**：请检查音频格式、参考文本、API Key 权限。
-- **TTS无响应**：请确认本会话已用 `vits` 开启，且文本不超过30字。
+- **TTS无响应**：请确认本会话处于开启状态（全局或本会话），且消息为纯文本并未超出自动TTS长度限制。
 
 ---
 
