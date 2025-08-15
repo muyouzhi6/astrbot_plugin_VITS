@@ -2,41 +2,49 @@
     "url": {
         "description": "API 地址",
         "type": "string",
-        "hint": "如 https://api.siliconflow.cn/v1"
+    "hint": "如 https://api.siliconflow.cn/v1",
+    "default": "https://api.siliconflow.cn/v1"
     },
     "apikey": {
         "description": "API 密钥",
         "type": "string",
-        "hint": "如 sk-xxx"
+    "hint": "如 sk-xxx",
+    "default": ""
     },
     "name": {
         "description": "模型名称",
         "type": "string",
-        "hint": "如 siliconflow-vits-v1"
+    "hint": "如 FunAudioLLM/CosyVoice2-0.5B",
+    "default": "FunAudioLLM/CosyVoice2-0.5B"
     },
     "voice": {
         "description": "音色名称/uri",
         "type": "string",
-        "hint": "如 zhizhi-xxx"
+    "hint": "如 zhizhi-xxx 或 speech:myvoice:...",
+    "default": ""
     },
     "global_enable": {
         "description": "全局TTS开关（优先级最高，关闭时所有会话都不自动TTS）",
         "type": "bool",
-        "hint": "true=全局开启，false=全局关闭（优先级高于会话列表）"
+    "hint": "true=全局开启，false=全局关闭（优先级高于会话列表）",
+    "default": false
     },
     "enabled_sessions": {
     "description": "自动TTS的会话（user_用户ID,group_群号，逗号分隔）",
         "type": "string",
-    "hint": "如 user_123,group_456。global_enable=false 时，仅这些会话自动TTS；global_enable=true 时全部会话自动TTS"
+    "hint": "如 user_123,group_456。global_enable=false 时，仅这些会话自动TTS；global_enable=true 时全部会话自动TTS",
+    "default": ""
     },
     "text_limit": {
         "description": "最大字数（已固定：汉字≤80，英文≤200）",
         "type": "int",
-        "hint": "无需修改，插件已自动按汉字≤80、英文≤200限制"
+    "hint": "无需修改，插件已自动按汉字≤80、英文≤200限制",
+    "default": 30
     },
     "speed": {
         "description": "语速（1正常，0.8慢，1.2快）",
         "type": "float",
-        "hint": "如 1.1"
+    "hint": "如 1.1",
+    "default": 1.0
     }
 }
