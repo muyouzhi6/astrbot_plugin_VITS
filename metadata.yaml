@@ -1,8 +1,9 @@
 name: astrbot_plugin_VITS # 这是你的插件的唯一识别名。
-desc: 硅基流动api语音合成。 # 插件简短描述
+desc: 硅基流动api语音合成（木有知功能增强版）。 # 插件简短描述
 help: |
 		/vits_say 手动文本转语音（不限制长度）。
 		全局TTS开关 global_enable（默认关闭）；可在 enabled_sessions 配置会话或用 /vits_enable /vits_disable 在对话里单独控制。
 		自动TTS仅在纯文本消息且长度在：汉字≤80、英文≤200 时触发，超限改为纯文本发送。
 version: v1.2.0 # 插件版本号。格式：v1.1.1 或者 v1.1
 author: 第九位魔神 # 作者
+
